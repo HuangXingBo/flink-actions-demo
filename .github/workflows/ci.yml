@@ -12,12 +12,11 @@ on:
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
         java: [ '1.8' ]
-    name: Build Flink - JDK${{ matrix.os }}/${{ matrix.java }}
+    name: Build Flink - JDK - ${{ matrix.java }}
 
     steps:
     - uses: actions/checkout@v2
@@ -28,33 +27,33 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: build-target
-        key: ${{ matrix.os }}-build-target-${{ hashFiles('**/pom.xml') }}
+        key: build-target-${{ hashFiles('**/pom.xml') }}
         restore-keys:
-          ${{ matrix.os }}-build-target
+          build-target
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository/com
-        key: ${{ matrix.os }}-${{ matrix.java }}-maven-com-${{ hashFiles('**/pom.xml') }}
+        key: ${{ matrix.java }}-maven-com-${{ hashFiles('**/pom.xml') }}
         restore-keys:
-          ${{ matrix.os }}-${{ matrix.java }}-maven-com-
+          ${{ matrix.java }}-maven-com-
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository/org
-        key: ${{ matrix.os }}-${{ matrix.java }}-maven-org-${{ hashFiles('**/pom.xml') }}
+        key: ${{ matrix.java }}-maven-org-${{ hashFiles('**/pom.xml') }}
         restore-keys:
-          ${{ matrix.os }}-${{ matrix.java }}-maven-org-
+          ${{ matrix.java }}-maven-org-
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository/net
-        key: ${{ matrix.os }}-${{ matrix.java }}-maven-net-${{ hashFiles('**/pom.xml') }}
+        key: ${{ matrix.java }}-maven-net-${{ hashFiles('**/pom.xml') }}
         restore-keys:
-          ${{ matrix.os }}-${{ matrix.java }}-maven-net-
+          ${{ matrix.java }}-maven-net-
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository/io
-        key: ${{ matrix.os }}-{{ matrix.java }}-maven-io-${{ hashFiles('**/pom.xml') }}
+        key: ${{ matrix.java }}-maven-io-${{ hashFiles('**/pom.xml') }}
         restore-keys:
-          ${{ matrix.os }}-${{ matrix.java }}-maven-io-
+          ${{ matrix.java }}-maven-io-
     - name: Build with Maven
       run: |
         export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g"
@@ -62,6 +61,10 @@ jobs:
         mkdir -p ~/.m2
         mvn $MAVEN_CLI_OPTS clean install -Dmaven.javadoc.skip=true -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
         rm -rf ~/.m2/repository/org/apache/flink
+    - uses: actions/upload-artifact@v1
+      with:
+        name: maven-result
+        path: flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
 
   build-python:
     runs-on: ${{ matrix.os }}
@@ -74,6 +77,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v1
+      with:
+        name: maven-result
+        path: build-target
+    - run: ls build-target
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
