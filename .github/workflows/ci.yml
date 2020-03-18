@@ -70,6 +70,8 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python-version: [3.5, 3.6]
     name: Build Python - Python${{ matrix.os }}/${{ matrix.python-version }}
+
+    steps:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
