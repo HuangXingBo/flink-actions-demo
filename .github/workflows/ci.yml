@@ -29,9 +29,7 @@ jobs:
     - name: Build with Maven
       run: |
         mvn -version
-        export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN"
-        export MAVEN_CLI_OPTS="--no-transfer-progress"
-        mvn $MAVEN_CLI_OPTS -Djava.version=${{ matrix.java }} -DskipTests install
+        mvn clean install -DskipTests
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
