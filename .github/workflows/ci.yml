@@ -28,6 +28,12 @@ jobs:
         java-version: ${{ matrix.java }}
     - uses: actions/cache@v1
       with:
+        path: build-target
+        key: build-target-${{ hashFiles('**/pom.xml') }}
+        restore-keys:
+          build-target
+    - uses: actions/cache@v1
+      with:
         path: ~/.m2/repository/com
         key: ${{ matrix.java }}-maven-com-${{ hashFiles('**/pom.xml') }}
         restore-keys:
