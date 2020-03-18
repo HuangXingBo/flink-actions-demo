@@ -26,10 +26,38 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository/com
+        key: ${{ matrix.java }}-maven-com-${{ hashFiles('**/pom.xml') }}
+        restore-keys:
+          ${{ matrix.java }}-maven-com-
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository/org
+        key: ${{ matrix.java }}-maven-org-${{ hashFiles('**/pom.xml') }}
+        restore-keys:
+          ${{ matrix.java }}-maven-org-
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository/net
+        key: ${{ matrix.java }}-maven-net-${{ hashFiles('**/pom.xml') }}
+        restore-keys:
+          ${{ matrix.java }}-maven-net-
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository/io
+        key: ${{ matrix.java }}-maven-io-${{ hashFiles('**/pom.xml') }}
+        restore-keys:
+          ${{ matrix.java }}-maven-io-
     - name: Build with Maven
       run: |
         mvn -version
-        mvn clean install -DskipTests
+        export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN"
+        export MAVEN_CLI_OPTS="--no-transfer-progress"
+        mkdir -p ~/.m2
+        mvn $MAVEN_CLI_OPTS clean install -DskipTests
+        rm -rf ~/.m2/repository/org/apache/flink
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
