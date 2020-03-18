@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         python-version: [3.5]
         java: [ '1.8' ]
     name: Build Flink - JDK${{ matrix.os }}/${{ matrix.java }}/${{ matrix.python-version }}
@@ -58,7 +58,7 @@ jobs:
           ${{ matrix.java }}-maven-io-
     - name: Build with Maven
       run: |
-        export MAVEN_OPTS="-Xmx4g -XX:ReservedCodeCacheSize=1g"
+        export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g"
         export MAVEN_CLI_OPTS="--no-transfer-progress"
         mkdir -p ~/.m2
         mvn clean install -Dmaven.javadoc.skip=true -DskipTests
