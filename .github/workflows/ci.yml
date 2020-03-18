@@ -65,6 +65,7 @@ jobs:
 
   build-python:
     runs-on: ${{ matrix.os }}
+    needs: build
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
