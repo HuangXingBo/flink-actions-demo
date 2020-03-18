@@ -47,7 +47,7 @@ under the License.
 		<module>flink-connector-elasticsearch5</module>
 		<module>flink-connector-elasticsearch6</module>
 		<module>flink-connector-elasticsearch7</module>
-		<module>flink-connector-hive</module>
+<!--		<module>flink-connector-hive</module>-->
 		<module>flink-connector-rabbitmq</module>
 		<module>flink-connector-twitter</module>
 		<module>flink-connector-nifi</module>
