@@ -58,7 +58,7 @@ jobs:
           ${{ matrix.java }}-maven-io-
     - name: Build with Maven
       run: |
-        export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN -Dflink.convergence.phase=install -Pcheck-convergence -Dflink.forkCount=2 -Dflink.forkCountTestPackage=2 ven.wagon.http.pool=false -Dmaven.javadoc.skip=true -B -U -DskipTests"
+        export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN -Dflink.convergence.phase=install -Dflink.forkCount=2 -Dflink.forkCountTestPackage=2 ven.wagon.http.pool=false -Dmaven.javadoc.skip=true -B -U -DskipTests"
         export MAVEN_CLI_OPTS="--no-transfer-progress"
         mkdir -p ~/.m2
         mvn clean install $MAVEN_OPTS
