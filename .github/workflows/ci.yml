@@ -89,7 +89,6 @@ jobs:
       with:
         name: maven-result
         path: flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
-    - run: ls build-target
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
