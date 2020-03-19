@@ -72,7 +72,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: maven-result
-        path: flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
+        path: build-target
 
   build-python:
     runs-on: ${{ matrix.os }}
