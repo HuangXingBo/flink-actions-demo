@@ -61,6 +61,14 @@ jobs:
         mkdir -p ~/.m2
         mvn $MAVEN_CLI_OPTS clean install -Dmaven.javadoc.skip=true -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
         rm -rf ~/.m2/repository/org/apache/flink
+    -name: locate
+      run: |
+        pwd
+        ls -al
+        ls flink-dist
+        ls flink-dist/target
+        ls flink-dist/target/flink-*-SNAPSHOT-bin
+        ls flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
     - uses: actions/upload-artifact@v1
       with:
         name: maven-result
