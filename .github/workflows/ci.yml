@@ -102,8 +102,8 @@ jobs:
     - name: build bdist wheel
       run: |
         pwd
+        ls flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
         cd flink-python
         pwd
-        ls 
         python setup.py sdist
         ls -al dist/
