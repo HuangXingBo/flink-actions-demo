@@ -105,5 +105,5 @@ jobs:
         ls flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
         cd flink-python
         pwd
-        python setup.py sdist
+        python setup.py bdist_wheel
         ls -al dist/
