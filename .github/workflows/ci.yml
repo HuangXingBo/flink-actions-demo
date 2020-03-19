@@ -98,6 +98,7 @@ jobs:
         pwd
         cd flink-python
         python -m pip install --upgrade pip
+        pip install wheel
         pip install cython==0.28.1
     - name: build bdist wheel
       run: |
