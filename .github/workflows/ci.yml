@@ -88,7 +88,7 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: maven-result
-        path: flink-dist/target/flink-1.11-SNAPSHOT-bin/flink-1.11-SNAPSHOT-bin
+        path: flink-dist/target/flink-1.11-SNAPSHOT-bin/flink-1.11-SNAPSHOT
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
