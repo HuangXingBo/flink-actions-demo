@@ -61,7 +61,7 @@ jobs:
         mkdir -p ~/.m2
         mvn $MAVEN_CLI_OPTS clean install -Dmaven.javadoc.skip=true -DskipTests -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
         rm -rf ~/.m2/repository/org/apache/flink
-    -name: Locate reusult
+    - name: Locate reusult
       run: |
         pwd
         ls -al
