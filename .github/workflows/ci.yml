@@ -94,6 +94,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel twine==1.12.0
         pip install cython==0.28.1
+        pip install apache-beam==2.19.0
     - name: build bdist wheel
       run: |
         pwd
