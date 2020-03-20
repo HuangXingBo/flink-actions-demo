@@ -24,12 +24,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    # - uses: actions/cache@v1
-    #   with:
-    #     path: build-target
-    #     key: build-target-${{ hashFiles('**/pom.xml') }}
-    #     restore-keys:
-    #       build-target
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository/com
@@ -79,7 +73,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.5, 3.6]
     name: Build Python - Python${{ matrix.os }}/${{ matrix.python-version }}
 
@@ -98,7 +92,7 @@ jobs:
         pwd
         cd flink-python
         python -m pip install --upgrade pip
-        pip install wheel
+        pip install setuptools wheel twine==1.12.0
         pip install cython==0.28.1
     - name: build bdist wheel
       run: |
