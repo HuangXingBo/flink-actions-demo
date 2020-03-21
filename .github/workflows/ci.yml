@@ -103,4 +103,8 @@ jobs:
         cd flink-python
         pwd
         python setup.py bdist_wheel
-        ls -al dist/
+    - id: getwheelname
+      run: echo "::set-output name=wheel_file::$(ls dist/*.whl)"
+    - uses: actions/upload-artifact@v1
+      with:
+        path: ${{ steps.getwheelname.outputs.wheel_file }}
