@@ -100,14 +100,9 @@ jobs:
         ls flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
         cd flink-python
         python setup.py bdist_wheel
-    - name: get wheel name
-      id: getwheelname
-      run: |
-        cd flink-python
-        pwd
-        ls dist/*.whl
-        echo "::set-output name=wheelfile::$(ls dist/*.whl)"
-        echo ${{ steps.getwheelname.outputs.wheelfile }}
+    - id: getwheelname
+      name: get wheel name
+      run: echo "::set-output name=wheelfile::$(ls flink-python/dist/*.whl)"
     - uses: actions/upload-artifact@v1
       with:
         path: ${{ steps.getwheelname.outputs.wheelfile }}
