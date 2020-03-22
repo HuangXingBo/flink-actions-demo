@@ -105,8 +105,9 @@ jobs:
       run: |
         cd flink-python
         pwd
-        echo "::set-output name=wheel_file::$(ls dist/*.whl)"
-        echo ${{ steps.getwheelname.outputs.wheel_file }}
+        ls dist/*.whl
+        echo "::set-output name=wheelfile::$(ls dist/*.whl)"
+        echo ${{ steps.getwheelname.outputs.wheelfile }}
     - uses: actions/upload-artifact@v1
       with:
-        path: ${{ steps.getwheelname.outputs.wheel_file }}
+        path: ${{ steps.getwheelname.outputs.wheelfile }}
