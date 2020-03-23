@@ -5,9 +5,10 @@ name: Python package
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ master, releases/** ]
+
+env:
+  VERSION: 1.11-SNAPSHOT
 
 jobs:
   build:
@@ -61,8 +62,8 @@ jobs:
         ls -al
         ls flink-dist
         ls flink-dist/target
-        ls flink-dist/target/flink-*-SNAPSHOT-bin
-        ls flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
+        ls flink-dist/target/flink-$VERSION-bin
+        ls flink-dist/target/flink-$VERSION-bin/flink-$VERSION
     - uses: actions/upload-artifact@v1
       with:
         name: maven-result
@@ -82,7 +83,7 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: maven-result
-        path: flink-dist/target/flink-1.11-SNAPSHOT-bin/flink-1.11-SNAPSHOT
+        path: flink-dist/target/flink-$VERSION-bin/flink-$VERSION
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -97,12 +98,15 @@ jobs:
         pip install apache-beam==2.19.0
     - name: build bdist wheel
       run: |
-        ls flink-dist/target/flink-*-SNAPSHOT-bin/flink-*-SNAPSHOT
+        ls flink-dist/target/flink-$VERSION-bin/flink-$VERSION
         cd flink-python
         python setup.py bdist_wheel
-    # - id: getwheelname
-    #   name: get wheel name
-    #   run: echo "::set-output name=wheelfile::$(ls flink-python/dist/*.whl)"
-    - uses: actions/upload-artifact@master
+    - id: getwheelname
+      name: get wheel name
+      run: |
+        ls flink-python/dist/*.whl
+        echo "::set-output name=file::$(ls flink-python/dist/*.whl)"
+        echo ${{ steps.getwheelname.outputs.file }}
+    - uses: actions/upload-artifact@v1
       with:
-        path: flink-python/dist/*.whl
+        path: ${{ steps.getwheelname.outputs.file }}
