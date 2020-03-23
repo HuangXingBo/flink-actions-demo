@@ -4,7 +4,10 @@ name: Python package
 
 on:
   push:
-    branches: [ master, releases/** ]
+    branches: [ master ]
+  release:
+    types: [ created ]
+
 
 env:
   VERSION: 1.11-SNAPSHOT
@@ -66,7 +69,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: maven-result
-        path: build-target
+        path: flink-dist/target/flink-${{ env.VERSION }}-bin/flink-${{ env.VERSION }}
 
   build-python:
     runs-on: ${{ matrix.os }}
