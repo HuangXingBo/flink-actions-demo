@@ -1,5 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# This workflow will build PyFlink wheel packages.
 
 name: Python package
 
@@ -98,15 +97,14 @@ jobs:
         pip install apache-beam==2.19.0
     - name: build bdist wheel
       run: |
-        ls flink-dist/target/flink-$VERSION-bin/flink-$VERSION
         cd flink-python
         python setup.py bdist_wheel
     - id: getwheelname
       name: get wheel name
       run: |
-        ls flink-python/dist/*.whl
-        echo "::set-output name=file::$(ls flink-python/dist/*.whl)"
-        echo ${{ steps.getwheelname.outputs.file }}
+        cd flink-python/dist
+        echo "::set-output name=file::$(ls *.whl)"
     - uses: actions/upload-artifact@v1
       with:
-        path: ${{ steps.getwheelname.outputs.file }}
+        name: ${{ steps.getwheelname.outputs.file }}
+        path: flink-python/dist/${{ steps.getwheelname.outputs.file }}
