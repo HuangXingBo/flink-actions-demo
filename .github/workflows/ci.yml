@@ -93,8 +93,8 @@ jobs:
     - name: Install dependencies
       run: |
         cd flink-python
-        python -m pip install --upgrade pip
-        pip install setuptools wheel
+        python -m pip install --upgrade pip setuptools
+        pip install wheel
         pip install apache-beam==2.19.0
         pip install cython==0.28.1
     - name: build bdist wheel
